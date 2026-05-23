@@ -18,7 +18,7 @@ import PitStrategy from './tabs/PitStrategy'
 import Telemetry   from './tabs/Telemetry'
 import Watchlist   from './tabs/Watchlist'
 import RaceReplay  from './tabs/RaceReplay'
-import McLarenLane from './tabs/McLarenLane'
+import PitWall from './tabs/PitWall'
 
 const TABS = {
   team:        TeamFocus,
@@ -34,7 +34,7 @@ const TABS = {
   telemetry:   Telemetry,
   pitStrategy: PitStrategy,
   weather:     Weather,
-  mclarenLane: McLarenLane,
+  pitWall:     PitWall,
   replay:      RaceReplay,
 }
 

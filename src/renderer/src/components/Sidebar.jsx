@@ -24,7 +24,7 @@ const SECTIONS = [
       { id: 'drivers',     label: 'Drivers' },
       { id: 'teams',       label: 'Teams' },
       { id: 'watchlist',   label: 'Watchlist', watchlist: true },
-      { id: 'mclarenLane', label: '🟠 McLaren Lane' },
+      { id: 'pitWall',     label: 'Pit Wall' },
     ],
   },
   {
