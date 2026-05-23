@@ -1,6 +1,6 @@
 {
   "name": "f1-tracker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "F1 2025/2026 Data Tracking Desktop App",
   "main": "out/main/index.js",
   "scripts": {
