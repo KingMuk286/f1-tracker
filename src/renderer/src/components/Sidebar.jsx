@@ -21,9 +21,10 @@ const SECTIONS = [
   {
     label: 'Explore',
     items: [
-      { id: 'drivers',   label: 'Drivers' },
-      { id: 'teams',     label: 'Teams' },
-      { id: 'watchlist', label: 'Watchlist', watchlist: true },
+      { id: 'drivers',     label: 'Drivers' },
+      { id: 'teams',       label: 'Teams' },
+      { id: 'watchlist',   label: 'Watchlist', watchlist: true },
+      { id: 'mclarenLane', label: '🟠 McLaren Lane' },
     ],
   },
   {

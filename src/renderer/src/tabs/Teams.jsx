@@ -15,7 +15,7 @@ import {
 export default function Teams({ season }) {
   const [selected, setSelected] = useState(null)
   const teams = getTeams(season)
-  const { getPhoto } = useDriverPhotos()
+  const { getPhoto } = useDriverPhotos(season)
 
   const { data: cStandings } = useApiData(`standings-constructors-${season}`, jolpicaUrl(season, 'constructorStandings.json'), TTL.STANDINGS, [season])
   const { data: dStandings } = useApiData(`standings-drivers-${season}`,      jolpicaUrl(season, 'driverStandings.json'),      TTL.STANDINGS, [season])

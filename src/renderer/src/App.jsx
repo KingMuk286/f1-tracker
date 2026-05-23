@@ -18,6 +18,7 @@ import PitStrategy from './tabs/PitStrategy'
 import Telemetry   from './tabs/Telemetry'
 import Watchlist   from './tabs/Watchlist'
 import RaceReplay  from './tabs/RaceReplay'
+import McLarenLane from './tabs/McLarenLane'
 
 const TABS = {
   team:        TeamFocus,
@@ -27,12 +28,13 @@ const TABS = {
   calendar:    Calendar,
   drivers:     Drivers,
   teams:       Teams,
+  watchlist:   Watchlist,
   compare:     Compare,
   analytics:   Analytics,
-  weather:     Weather,
-  pitStrategy: PitStrategy,
   telemetry:   Telemetry,
-  watchlist:   Watchlist,
+  pitStrategy: PitStrategy,
+  weather:     Weather,
+  mclarenLane: McLarenLane,
   replay:      RaceReplay,
 }
 

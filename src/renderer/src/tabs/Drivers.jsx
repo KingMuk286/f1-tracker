@@ -3,7 +3,7 @@ import { useApiData } from '../hooks/useApiData'
 import { useDriverPhotos } from '../hooks/useDriverPhotos'
 import { useWatchlist } from '../context/WatchlistContext'
 import { jolpicaUrl, TTL } from '../constants/endpoints'
-import { getTeams } from '../constants/teams'
+import { getTeams, CONSTRUCTOR_COLORS } from '../constants/teams'
 import TeamDot from '../components/TeamDot'
 import StatCard from '../components/StatCard'
 import DriverAvatar from '../components/DriverAvatar'
@@ -86,6 +86,12 @@ export default function Drivers({ season }) {
     TTL.CALENDAR, [season]
   )
 
+  const { data: dStandData } = useApiData(
+    `standings-drivers-${season}`, jolpicaUrl(season, 'driverStandings.json'), TTL.STANDINGS, [season]
+  )
+  const standings = dStandData?.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings || []
+  const getStanding = id => standings.find(s => s.Driver.driverId === id)
+
   const allDrivers = useMemo(() => {
     if (!useApiDrivers) {
       // 2025/2026: use hardcoded team data
@@ -93,24 +99,24 @@ export default function Drivers({ season }) {
         t.drivers.map(d => ({ ...d, teamId: t.id, teamName: t.name, teamColor: t.color }))
       )
     }
-    // 2023/2024: build from Jolpica API data
+    // 2023/2024: build from Jolpica API data, enrich with team colors from standings
     const apiDrivers = apiDriversData?.MRData?.DriverTable?.Drivers || []
-    return apiDrivers.map(d => ({
-      id: d.driverId,
-      name: `${d.givenName} ${d.familyName}`,
-      short: d.code || d.driverId.slice(0, 3).toUpperCase(),
-      number: parseInt(d.permanentNumber) || 0,
-      teamId: 'unknown',
-      teamName: '',
-      teamColor: '#888888',
-    }))
-  }, [useApiDrivers, teams, apiDriversData])
-
-  const { data: dStandData } = useApiData(
-    `standings-drivers-${season}`, jolpicaUrl(season, 'driverStandings.json'), TTL.STANDINGS, [season]
-  )
-  const standings = dStandData?.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings || []
-  const getStanding = id => standings.find(s => s.Driver.driverId === id)
+    return apiDrivers.map(d => {
+      const standing = standings.find(s => s.Driver.driverId === d.driverId)
+      const constructorId = standing?.Constructors?.[0]?.constructorId || ''
+      const teamColor = CONSTRUCTOR_COLORS[constructorId] || '#888888'
+      const teamName = standing?.Constructors?.[0]?.name || ''
+      return {
+        id: d.driverId,
+        name: `${d.givenName} ${d.familyName}`,
+        short: d.code || d.driverId.slice(0, 3).toUpperCase(),
+        number: parseInt(d.permanentNumber) || 0,
+        teamId: constructorId || 'unknown',
+        teamName,
+        teamColor,
+      }
+    })
+  }, [useApiDrivers, teams, apiDriversData, standings])
 
   const selectedDriver = selected ? allDrivers.find(d => d.id === selected) : null
   const selectedStanding = selectedDriver ? getStanding(selectedDriver.id) : null

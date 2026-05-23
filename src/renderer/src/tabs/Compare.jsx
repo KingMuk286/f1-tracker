@@ -497,7 +497,7 @@ function TeamCompare({ season }) {
 // ─── Root Compare tab ──────────────────────────────────────
 export default function Compare({ season }) {
   const [mode, setMode] = useState('driver')
-  const { getPhoto } = useDriverPhotos()
+  const { getPhoto } = useDriverPhotos(season)
 
   // Build driver list from live standings (works for any season)
   const { data: dStData, loading: dLoading } = useApiData(

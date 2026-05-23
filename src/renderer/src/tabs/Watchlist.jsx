@@ -29,7 +29,7 @@ function PinButton({ id, style }) {
 }
 
 function WatchlistDriverCard({ driver, standing, season }) {
-  const { getPhoto } = useDriverPhotos()
+  const { getPhoto } = useDriverPhotos(season)
   const photo = getPhoto(driver.short, driver.number)
 
   const { data: resultsData } = useApiData(

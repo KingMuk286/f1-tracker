@@ -6,6 +6,7 @@ import { constructorColor } from '../constants/teams'
 import TeamDot from '../components/TeamDot'
 import StatCard from '../components/StatCard'
 import DriverAvatar from '../components/DriverAvatar'
+import CustomSelect from '../components/CustomSelect'
 import { formatPoints } from '../utils/lapFormatter'
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, Tooltip,
@@ -176,6 +177,11 @@ export default function TeamFocus({ season }) {
   const color0 = teamColor
   const color1 = teamColor + 'AA'
 
+  const teamOptions = constructors.map(c => ({
+    value: c.Constructor.constructorId,
+    label: c.Constructor.name,
+  }))
+
   return (
     <div>
       {/* ── Team selector ── */}
@@ -188,18 +194,12 @@ export default function TeamFocus({ season }) {
           {cLoading ? (
             <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>Loading teams…</div>
           ) : (
-            <select
-              className="styled-select"
+            <CustomSelect
               value={effectiveId}
-              onChange={e => setSelectedId(e.target.value)}
-              style={{ fontSize: 15, fontWeight: 600, padding: '6px 36px 6px 10px' }}
-            >
-              {constructors.map(c => (
-                <option key={c.Constructor.constructorId} value={c.Constructor.constructorId}>
-                  {c.Constructor.name}
-                </option>
-              ))}
-            </select>
+              onChange={setSelectedId}
+              options={teamOptions}
+              buttonStyle={{ fontSize: 14, fontWeight: 600, minWidth: 160 }}
+            />
           )}
         </div>
         {selectedCSt && (
